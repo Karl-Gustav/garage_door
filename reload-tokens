@@ -1,0 +1,5 @@
+#! /bin/bash
+
+pid=$(netstat -l -p |grep https | grep -o [0-9]*/python |cut -f1 -d"/")
+
+kill -s USR1 $pid && echo "Server tokens reloaded" || echo "Failed to reload server tokens, do manually"
