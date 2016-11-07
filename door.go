@@ -67,9 +67,12 @@ func main() {
 
 	initDoorRemote()
 
+	c := autocert.DirCache("certs")
+
 	m := autocert.Manager{
 		Prompt:     autocert.AcceptTOS,
 		HostPolicy: autocert.HostWhitelist("unidoor.space"),
+		Cache:      c,
 	}
 
 	http.HandleFunc("/", rootHandler)
