@@ -63,13 +63,7 @@ func main() {
 	}
 	port := os.Args[1]
 
-	if err := rpio.Open(); err != nil {
-		log.Fatal(err)
-		os.Exit(2)
-	}
-	defer rpio.Close()
-	doorRemote.Output()
-	doorRemote.High()
+	initDoorRemote()
 
 	http.HandleFunc("/", rootHandler)
 	http.HandleFunc("/token/", tokenHandler)
@@ -79,6 +73,16 @@ func main() {
 		log.Fatal(err)
 		os.Exit(3)
 	}
+}
+
+func initDoorRemote() {
+	if err := rpio.Open(); err != nil {
+		log.Fatal(err)
+		os.Exit(2)
+	}
+	defer rpio.Close()
+	doorRemote.Output()
+	doorRemote.High()
 }
 
 func readFile(path string) []byte {
